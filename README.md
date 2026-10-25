@@ -1,11 +1,8 @@
-<div align="center">
+# My Week 1 Cybersecurity Lab
 
-# 🔐 Cybersecurity Lab Environment Setup
+Week 1, Networkwalks Cybersecurity Internship, Batch B084M, task WK1-PM1. I am building my own test lab on my Mac, so I can learn scanning and vulnerability checks without touching any real network.
 
-**Building an isolated virtual lab for penetration testing and ethical hacking practice**
-</div>
-
-<p align="center">
+<p>
   <img src="https://img.shields.io/badge/Skill-Cybersecurity-404040?style=flat-square&labelColor=C00000" />
   <img src="https://img.shields.io/badge/Ver-UTM-0070C0?style=flat-square&labelColor=000000" />
   <img src="https://img.shields.io/badge/Kali%20Linux-arm64-E87500?style=flat-square&labelColor=000000&logo=kalilinux&logoColor=white" />
@@ -21,134 +18,83 @@
   <img src="https://img.shields.io/badge/Muhammad%20Abdul%20Hanan-C00000?style=flat-square" />
 </p>
 
----
+## Why I am making this lab
 
-## 📌 Project Overview
+I want a place of my own where I can try security tools and see how networks behave. On my own Mac, inside a VM, a mistake stays inside the VM. That is the whole point for me in Week 1: get the lab right first, then use it for the later weeks.
 
-This is my Week 1 project for the Networkwalks Cybersecurity Internship, Batch B084M. Task code: WK1-PM1.
+I made this repo before the lab was finished, so I can note things down as I do them. Screenshots and final results will come from my own setup, once it is done. I am not putting in any screenshot I did not take.
 
-I built this lab so I can practise scanning and vulnerability assessment on machines I own, without touching a real network. Everything here stays inside a private virtual network, and target machines can be added to the same network later.
+## My setup at a glance
 
-Status: I made this repo first, so I can write things down as I go. The screenshots and final check results will go in after I finish the setup on my Mac. I will not add a screenshot I did not take myself.
-
----
-
-## 🎯 Objectives
-
-- Set up a hypervisor on my Mac and create a Kali Linux VM in it.
-- Create a private network for the lab, in the 10.0.0.0/24 range.
-- Give Kali a fixed IP address, 10.0.0.2, and check that it can reach the internet.
-- Turn on clipboard sharing, drag and drop, and a shared Downloads folder.
-- Take a clean snapshot of the VM, so I can go back to a working setup.
-- Write down the full setup, with my own screenshots, problems, and fixes.
-
----
-
-## 🛡️ Purpose of the Lab
-
-This lab is for learning only. I will use it for network reconnaissance, port scanning, vulnerability assessment, packet analysis, and other security testing, but only on systems I own or have permission to test.
-
----
-
-## 🏗️ Lab Architecture
-
-MacBook (host) -> UTM -> Kali Linux, 10.0.0.2
-MacBook (host) -> UTM -> future target VMs, same 10.0.0.0/24 network
-
-Future machines, as in the task diagram, are 10.0.0.7, 10.0.0.9, 10.0.0.10, 10.0.0.11 and 10.0.0.16. Those are Windows 7, Server 2016 and Android machines, and they are optional for now.
-
-A note on VirtualBox: the task sheet says VirtualBox. On Apple Silicon, VirtualBox is not a straight fit, so I used UTM instead. The network plan is the same: one private network, Kali as the attacker, and room for target machines later.
-
----
-
-## ⚙️ Lab Configuration
-
-| Component | Configuration |
+| Thing | My choice |
 | --- | --- |
-| Host OS | macOS, MacBook Air M2 |
-| Hypervisor | UTM |
-| Security OS | Kali Linux, arm64 build |
-| Virtual Network | Private network |
-| Network Address | 10.0.0.0/24 |
-| Kali IP Address | 10.0.0.2/24 |
-| Default Gateway | 10.0.0.1 |
-| DNS Server | 8.8.8.8 |
-| Future VM Range | 10.0.0.3-10.0.0.99 |
+| My computer | MacBook Air M2, macOS |
+| Tool to run VMs | UTM, because VirtualBox does not fit Apple Silicon well |
+| Attacker VM | Kali Linux, arm64 build |
+| Lab network | 10.0.0.0/24, private |
+| Kali IP I plan to use | 10.0.0.2/24 |
+| Gateway I plan to use | 10.0.0.1 |
+| DNS | 8.8.8.8 |
+| Machines I can add later | 10.0.0.7, 10.0.0.9, 10.0.0.10, 10.0.0.11, 10.0.0.16, Windows 7, Server 2016 and Android, optional for now |
 
----
+The task sheet names VirtualBox. I am using UTM for the same job on my Mac, and the network idea stays the same: Kali on one private network, with space for target machines on that same network later.
 
-## 🪜 Lab Setup Procedure
+My layout, in short: MacBook -> UTM -> Kali, 10.0.0.2, and later, MacBook -> UTM -> target VMs on 10.0.0.0/24.
 
-### Step 1. Download Kali Linux
+## How I am building it, step by step
 
-Download the Kali Linux arm64 image from the official Kali site, kali.org/get-kali.
+1. Get the Kali arm64 image from kali.org/get-kali.
+2. Make a new VM for it in UTM.
+3. Put that VM on a private network in the 10.0.0.0/24 range.
+4. Set Kali to a fixed IP, 10.0.0.2, with gateway 10.0.0.1 and DNS 8.8.8.8.
+5. Switch on clipboard sharing, drag and drop, and a shared Downloads folder, as the task asks.
+6. Take a snapshot of the clean VM before I test anything, so I can restore it if I break the setup.
 
-### Step 2. Create the VM in UTM
+## How I will know it works
 
-Create a new VM in UTM and attach the Kali image to it.
-
-### Step 3. Set up the private network
-
-Set the VM network to a private network in the 10.0.0.0/24 range, so Kali and future target VMs can talk to each other, and Kali can still reach the internet.
-
-### Step 4. Set a static IP on Kali
-
-Set Kali to 10.0.0.2, subnet mask 255.255.255.0, gateway 10.0.0.1, DNS 8.8.8.8. A fixed IP makes the lab easier to write about and to use again later.
-
-### Step 5. Turn on sharing
-
-Turn on clipboard sharing, file drag and drop, and a shared folder for Downloads, as the task asks, so I can move files between the Mac and Kali.
-
-### Step 6. Take a clean snapshot
-
-Take a snapshot of the clean, working VM before I run any tests. If a later test breaks the setup, I can restore this snapshot instead of starting again.
-
----
-
-## 🔎 Lab Verification
-
-| Test | Command | Expected Result |
+| What I will check | Command | What I expect to see |
 | --- | --- | --- |
-| Check IP address | `ip a` | Kali shows 10.0.0.2 |
-| Test gateway | `ping 10.0.0.1` | Successful replies |
-| Test internet | `ping 8.8.8.8` | Successful replies |
-| Test DNS | `nslookup networkwalks.com` | Domain resolves |
-| Verify Nmap | `nmap --version` | Nmap version displayed |
-| Verify snapshot | Restore snapshot and run `ip a` | Baseline configuration restored |
+| Kali IP | `ip a` | 10.0.0.2 |
+| Gateway | `ping 10.0.0.1` | Replies come back |
+| Internet | `ping 8.8.8.8` | Replies come back |
+| DNS | `nslookup networkwalks.com` | The name resolves |
+| Nmap is there | `nmap --version` | Version shows up |
+| Snapshot works | Restore it, then run `ip a` | Same 10.0.0.2 setup comes back |
 
-I will put the real output here, not just the expected output, once I run these checks.
+Once I run these, I will add the real output here, not just what I expected.
 
----
+## Screenshots I will add
 
-## 🐞 Problems Encountered & Solutions
+These will all be from my own Mac and VM:
 
-To be updated with the real problems I hit. I will write each one in my own words, what I tried, and what fixed it. If a fix from the task sheet works, I will say so. If it does not, I will say that too.
+- UTM settings for my Kali VM
+- Kali desktop after I log in
+- Kali network settings showing 10.0.0.2
+- Ping and DNS results
+- My snapshot, with its name and date
 
-One issue I already know to watch for, from the task sheet: after setting a static IP, Kali can lose internet on newer builds. The task sheet gives nmcli commands for that case. I will only write that section once I see whether it happens on my setup.
+## Problems I actually run into
 
----
+I will fill this in with real problems only, in my own words: what went wrong, what I tried, and what fixed it. If a fix from the task sheet works for me, I will say so. If it does not, I will say that instead.
 
-## 💡 What I Learned
+One thing I am watching for, because the task sheet mentions it: after a static IP is set, Kali can lose internet on newer builds, and the sheet gives nmcli commands for that. I will write about it only if it happens on my setup.
 
-To be updated after the setup. I do not want to list lessons I have not done yet.
+## What I am learning
 
----
+I will fill this in after the setup, with what I actually learned from doing it, not a list I wrote in advance.
 
-## 🔐 Security & Ethical Use
+## Rules I am following
 
-This laboratory is intended strictly for education purposes only, on machines I own or have permission to test.
+This lab is only for learning, and only on machines I own or have permission to test. I will not point these tools at systems that are not mine.
 
----
+## About this project
 
-## 🔗 Tools & Resources
+Program: Networkwalks Cybersecurity Internship
+Batch: B084M
+Week: 1
+Task: WK1-PM1, lab setup, adapted to UTM on Apple Silicon
+Author: Muhammad Abdul Hanan
 
-- **Kali Linux:** https://kali.org/get-kali
-- **Networkwalks project submission:** https://networkwalks.com/project-submit/
-
----
-
-## 👤 Author
-
-**Muhammad Abdul Hanan**
-
-Cybersecurity student, Networkwalks Batch B084M, Week 1, Task WK1-PM1
+Links I used:
+- Kali Linux: https://kali.org/get-kali
+- Networkwalks project submission: https://networkwalks.com/project-submit/
